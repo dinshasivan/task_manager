@@ -83,7 +83,7 @@ route.get('/getTask', async (req, res)=>{
     }
 })
 
-route.put('/updateTask:id', async (req, res)=>{
+route.put('/updateTask/:id', async (req, res)=>{
     try{
         const taskId = req.params.id;
         const { title, description, priority,status, date } = req.body;
@@ -110,7 +110,7 @@ route.put('/updateTask:id', async (req, res)=>{
     }
 })
 
-route.delete('/deleteTask:id', async (req, res)=>{
+route.delete('/deleteTask/:id', async (req, res)=>{
     try{
         const TaskId = req.params.id;
 
