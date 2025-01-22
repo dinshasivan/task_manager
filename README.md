@@ -1,5 +1,27 @@
 # task_manager
 ## Overview
+The Task Manager is a web application designed to help users efficiently organize and manage their tasks. It supports full CRUD operations (Create, Read, Update, Delete).
+
+
+The application is built with a **MERN** stack.
+
+**. Frontend:** React.js for a responsive and user-friendly UI.
+
+
+**. Backend:** Node.js and Express.js for API and business logic.
+
+**. Database:** MongoDB for scalable and flexible data storage.
+
+### Key Features
+
+**. Task Creation:** Add new tasks with a title and description.
+
+
+**. Task Viewing:** Display a list of all tasks, with options to view individual task details.
+
+**. Task Updates:** Modify task information, including title, description, and status.
+
+**. Task Deletion:** Remove tasks from the system when no longer needed.
 
 
 ## Getting Started
@@ -24,6 +46,27 @@ To run the project locally, follow these steps:
     ```bash
     npm run dev
     ```
+5. Here is the ```bash vite.config.js ``` file you'll be using.
+   
+   ```bash
+    import { defineConfig } from 'vite'
+    import react from '@vitejs/plugin-react'
+    
+    // https://vite.dev/config/
+    export default defineConfig({
+      plugins: [react()],
+      server:{
+        port:5000, 
+        proxy: {
+          "/api": {
+            target: "http://localhost:3000",
+            changeOrigin: true,
+            rewrite: (path) => path.replace(/^\/api/,""),
+          }
+        }
+      },
+    })
+   ```
 ### Mongodb Setup
 
 1. Install and open MongoDB Compass.
@@ -46,8 +89,13 @@ To run the project locally, follow these steps:
 ### API Documentation
 ### Task Management
 ### 1. Create Task
+
+
 **Endpoint:**/api/createTask
+
 **Method:** POST
+
+
 **Request Body:**
 ```bash
     {
@@ -59,8 +107,11 @@ To run the project locally, follow these steps:
     }
 ```
 ### 2. Update Task
+
 **Endpoint:** /api/updateTask
+
 **Method:** PUT
+
 **Request Body:**
 ```bash
     {
@@ -72,8 +123,12 @@ To run the project locally, follow these steps:
     }
 ```
 ### 3. Delete Task
+
 **Endpoint:** /api/deleteTask
+
+
 **Method:** DELETE
+
 **Request params:**
 ```bash
     {
@@ -81,8 +136,11 @@ To run the project locally, follow these steps:
     }
 ```
 ### 4. Get Task using id
+
 **Endpoint:** /api/getTask
+
 **Method:** GET
+
 **Request params:**
 ```bash
     {
