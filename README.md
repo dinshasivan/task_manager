@@ -58,39 +58,3 @@ To run the project locally, follow these steps:
   "createdAt":"12/01/2025"
     }
     ```
-### 2. Update Task
-**Endpoint:** /api/updateTask
-**Method:** PUT
-**Request Body:**
-```bash
-    {
-  "title": "Updated Task",
-  "description": "Description of the task",
-  "status":"pending",
-  "priority":"Hihg",
-  "createdAt":"12/01/2025"
-    }
-    ```
-### 3. Delete Task
-**Endpoint:** /api/deteleTask
-**Method:** DELETE
-**Request Params:**
-```bash
-    {
-  "_id":"678fc7c90fe1d3bc8846e1f2"
-    }
-    ```
-### 4. Delete Task
-**Endpoint:** /api/getTask
-**Method:** GET
-**Request Params:**
-```bash
-    {
-  "_id":"678fc7c90fe1d3bc8846e1f2"
-    }
-    ```
-
-
-
-
-
