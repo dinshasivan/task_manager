@@ -1,5 +1,6 @@
 import express,{json} from 'express';
 import { route } from './Routes/adminRoute.js';
+import cors from 'cors'
 
 const app = express();
 

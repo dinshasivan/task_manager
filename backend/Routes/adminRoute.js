@@ -34,38 +34,35 @@ mongoose.connect('mongodb://localhost:27017/TaskDB');
 
 // create task
 
-route.post('/createTask', async (req, res)=>{
-    try{
+route.post('/createTask', async (req, res) => {
+    try {
 
-        const {title, description, status,priority,createdAt} = req.body;
+        
+
+        const { title, description, status, priority, createdAt } = req.body;
 
         const existTask = await Task.findOne({title});
-
         if(existTask){
-            console.log("Task already added");
-            res.status(200).json({message:"Task already exist"})
-            console.log("Task already exist");
-            
-            
-        }
-        else{
-           const newTask = new Task({
-                title,
-                description,
-                status,
-                priority,
-                createdAt
-            })
-            await newTask.save();
-            res.status(201).json({message:"Task added successfully!"})
+            res.status(400).json({message:"Task Already exist"})
+        }else{
+
+        const newTask = new Task({
+            title,
+            description,
+            status,
+            priority,
+            createdAt: createdAt || new Date().toISOString(), // Default to current date if not provided
+        });
+        await newTask.save();
+        res.status(201).json({ message: "Task created successfully", task: newTask });
         }
        
-
-    }catch(error){
+    } catch (error) {
         console.error(error);
-        
+        res.status(500).json({ message: "Failed to create task", error: error.message });
     }
-})
+});
+
 
 
 route.get('/getTask', async (req, res)=>{
@@ -83,54 +80,90 @@ route.get('/getTask', async (req, res)=>{
     }
 })
 
-route.put('/updateTask/:id', async (req, res)=>{
-    try{
+route.get('/getTask/:id', async (req, res) => {
+    try {
         const taskId = req.params.id;
-        const { title, description, priority,status, date } = req.body;
+
+        const task = await Task.findById(taskId);
+
+        if (!task) {
+            return res.status(404).json({ message: "Task not found" });
+        }
+
+        res.status(200).json({ message: "Task retrieved successfully", task });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Failed to retrieve task", error: error.message });
+    }
+});
+
+route.get('/filterTasks', async (req, res) => {
+    try {
+        const { status, priority, createdAt } = req.query;
+
+        const filter = {};
+
+        if (status) filter.status = status;
+        if (priority) filter.priority = priority;
+        if (createdAt) filter.createdAt = createdAt;
+
+        const tasks = await Task.find(filter);
+
+        if(!tasks){
+            res.status(404).json({message:"Task Not found"})
+
+        }else{
+            res.status(200).json({ message: "Tasks filtered successfully", tasks });
+
+        }
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Failed to filter tasks", error: error.message });
+    }
+});
+
+
+route.put('/updateTask/:id', async (req, res) => {
+    try {
+        const taskId = req.params.id;
+        const { title, description, status, priority, createdAt } = req.body;
 
         const updatedTask = await Task.findByIdAndUpdate(
             taskId,
-            { title, description, priority,status, date },
+            {
+                $set: { title, description, status, priority, createdAt }
+            },
+            { new: true }
         );
 
-        if (updatedTask) {
-            res.status(200).json({
-                message: "Task updated successfully",
-                tasks: updatedTask
-            });
-        } else {
-            res.status(404).json({
-                message: "Task not found"
-            });
+        if (!updatedTask) {
+            return res.status(404).json({ message: "Task not found" });
         }
 
-    }catch(error){
+        res.status(200).json({ message: "Task updated successfully", task: updatedTask });
+    } catch (error) {
         console.error(error);
-        
+        res.status(500).json({ message: "Failed to update task", error: error.message });
     }
-})
+});
 
-route.delete('/deleteTask/:id', async (req, res)=>{
-    try{
-        const TaskId = req.params.id;
+route.delete('/deleteTask/:id', async (req, res) => {
+    try {
+        const taskId = req.params.id;
 
-        const deletedTask = await Task.findByIdAndDelete(TaskId);
+        const deletedTask = await Task.findByIdAndDelete(taskId);
 
-        if (deletedTask) {
-            res.status(200).json({
-                message: "Task deleted successfully"
-            });
-        } else {
-            res.status(404).json({
-                message: "Task not found"
-            });
+        if (!deletedTask) {
+            return res.status(404).json({ message: "Task not found" });
         }
 
-    }
-    catch(error){
+        res.status(200).json({ message: "Task deleted successfully", task: deletedTask });
+    } catch (error) {
         console.error(error);
-        
+        res.status(500).json({ message: "Failed to delete task", error: error.message });
     }
-})
+});
+
 
 export {route};
