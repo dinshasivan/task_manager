@@ -1,6 +1,8 @@
 # task_manager
+## Overview
 
-## 🛠️ Getting Started
+
+## Getting Started
 
 To run the project locally, follow these steps:
 
@@ -22,6 +24,11 @@ To run the project locally, follow these steps:
     ```bash
     npm run dev
     ```
+### Mongodb Setup
+
+1. Install and open MongoDB Compass.
+2. Create a new connection to your local MongoDB server or an Atlas cluster.
+
 ### Backend Setup
 
 1. Navigate to the project directory:
@@ -36,3 +43,54 @@ To run the project locally, follow these steps:
     ```bash
     npm start
     ```
+### API Documentation
+### Task Management
+### 1. Create Task
+**Endpoint:**/api/createTask
+**Method:**POST
+**Request Body:**
+```bash
+    {
+  "title": "New Task",
+  "description": "Description of the task",
+  "status":"pending",
+  "priority":"Low",
+  "createdAt":"12/01/2025"
+    }
+    ```
+### 2. Update Task
+**Endpoint:** /api/updateTask
+**Method:** PUT
+**Request Body:**
+```bash
+    {
+  "title": "Updated Task",
+  "description": "Description of the task",
+  "status":"pending",
+  "priority":"Hihg",
+  "createdAt":"12/01/2025"
+    }
+    ```
+### 3. Delete Task
+**Endpoint:** /api/deteleTask
+**Method:** DELETE
+**Request Params:**
+```bash
+    {
+  "_id":"678fc7c90fe1d3bc8846e1f2"
+    }
+    ```
+### 4. Delete Task
+**Endpoint:** /api/getTask
+**Method:** GET
+**Request Params:**
+```bash
+    {
+  "_id":"678fc7c90fe1d3bc8846e1f2"
+    }
+    ```
+
+
+
+
+
