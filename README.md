@@ -57,4 +57,17 @@ To run the project locally, follow these steps:
   "priority":"Low",
   "createdAt":"12/01/2025"
     }
-    ```
+```
+### 2. Update Task
+**Endpoint:** /api/updateTask
+**Method:** PUT
+**Request Body:**
+```bash
+    {
+    "title":"Updated Task",
+    "description":"Description of updated task",
+    "status":"pending",
+    "priority":"low",
+    "createdAt":"20/1/2025"
+    }
+```
