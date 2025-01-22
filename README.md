@@ -71,3 +71,22 @@ To run the project locally, follow these steps:
     "createdAt":"20/1/2025"
     }
 ```
+### 3. Delete Task
+**Endpoint:** /api/deleteTask
+**Method:** DELETE
+**Request params:**
+```bash
+    {
+    "_id":"678fc7c90fe1d3bc8846e1f2"
+    }
+```
+### 4. Get Task using id
+**Endpoint:** /api/getTask
+**Method:** GET
+**Request params:**
+```bash
+    {
+    "_id":"678fc7c90fe1d3bc8846e1f2"
+    }
+```
+
