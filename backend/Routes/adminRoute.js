@@ -97,24 +97,21 @@ route.get('/getTask/:id', async (req, res) => {
     }
 });
 
-route.get('/filterTasks', async (req, res) => {
+route.get('/filterTasks/:data?', async (req, res) => {
     try {
-        const { status, priority, createdAt } = req.query;
-
-        const filter = {};
-
-        if (status) filter.status = status;
-        if (priority) filter.priority = priority;
-        if (createdAt) filter.createdAt = createdAt;
-
-        const tasks = await Task.find(filter);
-
-        if(!tasks){
-            res.status(404).json({message:"Task Not found"})
-
+        const { data } = req.params;
+        if(data){
+            const tasks = await Task.find({
+                $or:[
+                    {title:data},
+                    {priority:data},
+                    {status:data}
+                ]
+            });
+            res.status(200).json(tasks);
         }else{
-            res.status(200).json({ message: "Tasks filtered successfully", tasks });
-
+            const tasks = await Task.find({});
+            res.status(200).json(tasks);
         }
 
     } catch (error) {
