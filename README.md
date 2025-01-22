@@ -47,7 +47,7 @@ To run the project locally, follow these steps:
 ### Task Management
 ### 1. Create Task
 **Endpoint:**/api/createTask
-**Method:**POST
+**Method:** POST
 **Request Body:**
 ```bash
     {
